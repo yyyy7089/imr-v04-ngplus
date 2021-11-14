@@ -1,6 +1,6 @@
 const ELEMENTS = {
-    map: `x_________________xvxx___________xxxxxxvxx___________xxxxxxvxxx_xxxxxxxxxxxxxxxvxxx_xxxxxxxxxxxxxxxvxxx1xxxxxxxxxxxxxxxvxxx2xxxxxxxxxxxxxxxv_v___1xxxxxxxxxxxxxx_v___2xxxxxxxxxxxxxx_`,
-    la: [null,'*','**'],
+    map: `x_________________xvxx___________xxxxxxvxx___________xxxxxxvxxx_xxxxxxxxxxxxxxxvxxx_xxxxxxxxxxxxxxxvxxx1xxxxxxxxxxxxxxxvxxx2xxxxxxxxxxxxxxxv_v___3xxxxxxxxxxxxxx_v___4xxxxxxxxxxxxxx_`,
+    la: [null,'*','**','*','**'],
     names: [
         null,
         'H','He','Li','Be','B','C','N','O','F','Ne',
@@ -23,7 +23,7 @@ const ELEMENTS = {
         'Scandium','Titanium','Vanadium','Chromium','Manganese','Iron','Cobalt','Nickel','Copper','Zinc',
         'Gallium','Germanium','Arsenic','Selenium','Bromine','Krypton','Rubidium','Strontium','Yttrium','Zirconium',
         'Niobium','Molybdenum','Technetium','Ruthenium','Rhodium','Palladium','Silver','Cadmium','Indium','Tin',
-        'Antimony','Tellurium','Iodine','Xenom','Caesium','Barium','Lanthanum','Cerium','Praseodymium','Neodymium',
+        'Antimony','Tellurium','Iodine','Xenon','Caesium','Barium','Lanthanum','Cerium','Praseodymium','Neodymium',
         'Promethium','Samarium','Europium','Gadolinium','Terbium','Dysprosium','Holmium','Erbium','Thulium','Ytterbium',
         'Lutetium','Hafnium','Titanium','Tungsten','Rhenium','Osmium','Iridium','Platinum','Gold','Mercury',
         'Thallium','Lead','Bismuth','Polonium','Astatine','Radon','Francium','Radium','Actinium','Thorium',
@@ -370,6 +370,36 @@ const ELEMENTS = {
             },
             effDesc(x) { return format(x)+"x" },
         },
+        {
+            desc: `Double your neutron star gain.`,
+            cost: E('e9e3')
+        },
+        {
+            desc: `Your rank, tier, tetr boosts Red, Orange, Yellow star gain.`,
+            cost: E('e1.15e4'),
+            effect() {
+                let x = player.ranks.rank.root(2).mul(player.ranks.tier).mul(player.ranks.tetr)
+                return x
+            },
+            effDesc(x) { return format(x)+"x" },
+        },
+        {
+            desc: `Previous Upgrade boosts White, Blue, Omega star gain too.`,
+            cost: E('e1.27e4'),
+        },
+        {
+            desc: `Omega star boosts every stars in star tab at very reduced rate, even itself.`,
+            cost: E('e1.35e4'),
+            effect() {
+                let x = player.stars.generators[5].log10().pow(E(2))
+                return x
+            },
+            effDesc(x) { return format(x)+"x" },
+        },
+        /*{
+            desc: `Adds 3 new Atom Upgrades.`,
+            cost: E('e1.5e4'),
+        },*/
     ],
     /*
     {
@@ -389,6 +419,7 @@ const ELEMENTS = {
         if (MASS_DILATION.unlocked()) u += 15
         if (STARS.unlocked()) u += 18
         if (player.supernova.times.gte(1)) u = 49+5
+        if (player.supernova.tree.includes("chal6")) u += 5<Math.floor(player.chal.comps[9]/3)?5:Math.floor(player.chal.comps[9]/3)
         return u
     },
 }
@@ -400,7 +431,7 @@ function setupElementsHTML() {
 	for (let i = 0; i < ELEMENTS.map.length; i++) {
 		let m = ELEMENTS.map[i]
         if (m=='v') table += '</div><div class="table_center">'
-        else if (m=='_') table += `<div style="width: 50px; height: 50px">${ELEMENTS.la[m]!==undefined?"<br>"+ELEMENTS.la[m]:""}</div>`
+        else if (m=='_' || !isNaN(Number(m))) table += `<div ${ELEMENTS.la[m]!==undefined?`id='element_la_${m}'`:""} style="width: 50px; height: 50px">${ELEMENTS.la[m]!==undefined?"<br>"+ELEMENTS.la[m]:""}</div>`
         else if (m=='x') {
             num++
             table += ELEMENTS.upgs[num]===undefined?`<div style="width: 50px; height: 50px"></div>`
@@ -422,6 +453,10 @@ function updateElementsHTML() {
         tmp.el.elem_cost.setTxt(format(ELEMENTS.upgs[ch].cost,0))
         tmp.el.elem_eff.setHTML(ELEMENTS.upgs[ch].effDesc?"Currently: "+ELEMENTS.upgs[ch].effDesc(tmp.elements.effect[ch]):"")
     }
+    tmp.el.element_la_1.setVisible(tmp.elements.unl_length>57)
+    tmp.el.element_la_3.setVisible(tmp.elements.unl_length>57)
+    tmp.el.element_la_2.setVisible(tmp.elements.unl_length>88)
+    tmp.el.element_la_4.setVisible(tmp.elements.unl_length>88)
     for (let x = 1; x <= tmp.elements.upg_length; x++) {
         let upg = tmp.el['elementID_'+x]
         if (upg) {
