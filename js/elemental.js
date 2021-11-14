@@ -391,7 +391,7 @@ const ELEMENTS = {
             desc: `Omega star boosts every stars in star tab at very reduced rate, even itself.`,
             cost: E('e1.35e4'),
             effect() {
-                let x = player.stars.generators[5].log10().pow(E(2))
+                let x = player.stars.generators[5].add(E(1)).log10().pow(E(2))
                 return x
             },
             effDesc(x) { return format(x)+"x" },
