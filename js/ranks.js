@@ -55,7 +55,7 @@ const RANKS = {
             6: "make mass gain is boosted by (x+1)^2, where x is rank.",
             13: "triple mass gain.",
             14: "double Rage Powers gain.",
-            17: "make rank 6 reward effect is better. [(x+1)^2 -> (x+1)^x^1/3]",
+            17: "make rank 6 reward effect better. [(x+1)^2 -> (x+1)^x^1/3]",
             34: "make mass upgrade 3 softcap start 1.2x later.",
             40: "adds tickspeed power based on ranks.",
             45: "ranks boosts Rage Powers gain.",
@@ -64,7 +64,7 @@ const RANKS = {
             220: "rank 40 reward is overpowered.",
             300: "rank multiplie quark gain.",
             380: "rank multiplie mass gain.",
-            800: "make mass gain softcap 0.25% weaker based on rank.",
+            800: "make mass gain softcap weaker based on rank.",
         },
         tier: {
             1: "reduce rank reqirements by 20%.",
