@@ -4,7 +4,7 @@ const STARS = {
     gain() {
         let x = player.stars.generators[0]
         if (player.md.upgs[8].gte(1)) x = x.mul(tmp.md.upgs[8].eff)
-        return x
+        return x.softcap(E('1e700'),0.6,0)
     },
     effect() {
         let p = E(1)
@@ -30,7 +30,12 @@ const STARS = {
             if (player.supernova.tree.includes("s1") && i==4) x = x.mul(tmp.supernova.tree_eff.s1)
             if (player.md.upgs[8].gte(1)) x = x.mul(tmp.md.upgs[8].eff)
             if (player.atom.elements.includes(54)) x = x.mul(tmp.elements.effect[54])
-            if (i==5) x.root(3)
+            if (player.atom.elements.includes(56) && i<3) x = x.mul(tmp.elements.effect[56])
+            if (player.atom.elements.includes(57) && 3<=i) x = x.mul(tmp.elements.effect[56])
+            if (player.atom.elements.includes(58)) x = x.mul(tmp.elements.effect[58])
+
+            if (i==5 && !player.supernova.tree.includes("s5")) x = x.root(3)
+
             return x
         },
     },
@@ -39,13 +44,16 @@ const STARS = {
 
 function calcStars(dt) {
     player.stars.points = player.stars.points.add(tmp.stars.gain.mul(dt)).min(tmp.stars.maxlimit)
-    for (let x = 0; x < 6; x++) player.stars.generators[x] = player.stars.generators[x].add(tmp.stars.generators_gain[x].mul(dt))
+    for (let x = 0; x < 6; x++){
+        player.stars.generators[x] = player.stars.generators[x].add(tmp.stars.generators_gain[x].mul(dt))
+    }
 }
 
 function updateStarsTemp() {
     if (!tmp.stars) tmp.stars = {
         generators_gain: [],
     }
+    if (player.supernova.tree.includes("qol4")) STARS.generators.unl()
     tmp.stars.generator_req = player.stars.unls<6?STARS.generators.req[player.stars.unls]:E(1/0)
     for (let x = 0; x < 6; x++) tmp.stars.generators_gain[x] = STARS.generators.gain(x)
     tmp.stars.maxlimit = STARS.maxLimit()
