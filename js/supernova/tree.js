@@ -187,7 +187,7 @@ const TREE_UPGS = {
         qol4: {
             branch: ["qol2"],
             req() { return player.supernova.times.gte(14) },
-            reqDesc: `15 Supernovas.`,
+            reqDesc: `14 Supernovas.`,
             desc: `You auto buy stars.`,
             cost: E(2.5e8),
         },
