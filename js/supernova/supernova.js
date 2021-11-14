@@ -56,6 +56,7 @@ const SUPERNOVA = {
         if (player.supernova.tree.includes("sn2")) x = x.mul(tmp.supernova.tree_eff.sn2)
         if (player.supernova.tree.includes("sn3")) x = x.mul(tmp.supernova.tree_eff.sn3)
         if (player.supernova.tree.includes("sn4")) x = x.mul(tmp.supernova.tree_eff.sn4)
+        if (player.atom.elements.includes(55)) x = x.mul(E(2))
         return x
     },
 }
@@ -132,4 +133,3 @@ function updateSupernovaEndingHTML() {
         updateTreeHTML()
     }
 }
- 
