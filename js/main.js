@@ -803,6 +803,21 @@ const UPGS = {
                     return ret
                 },
             },
+            13: {
+                unl() { return player.atom.elements.includes(59) },
+                desc: "Unlock Tickspeed Generators.",
+                cost: E('e1.2e5'),
+            },
+            14: {
+                unl() { return player.atom.elements.includes(59) },
+                desc: "Unlock bosons.",
+                cost: E('e1.3e5'),
+            },
+            15: {
+                unl() { return player.atom.elements.includes(59) },
+                desc: "Tetr Requirement is halved.",
+                cost: E('e1.5e5'),
+            },
         },
     },
 }
