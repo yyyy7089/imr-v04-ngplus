@@ -69,7 +69,7 @@ const TREE_UPGS = {
             desc: `Dilated mass boosts Neutron star gain at a VERY reduced rate.`,
             cost: E("3e6"),
             effect() {
-                let x = player.md.particles.add(1).log10().log10()
+                let x = player.md.particles.add(1).log10().add(1).log10()
                 return x
             },
             effDesc(x) { return format(x)+"x" },
@@ -326,4 +326,3 @@ function updateTreeHTML() {
         if (unl) tmp.el["treeUpg_"+id].setClasses({btn_tree: true, locked: !tmp.supernova.tree_afford[id], bought: player.supernova.tree.includes(id), choosed: id == tmp.supernova.tree_choosed})
     }
 }
- 
