@@ -1,8 +1,8 @@
 const TREE_IDS = [
     ["","","","","qol1","s4","s3","s2","s1","c","sn1","sn2","sn3","sn4","chal1","","","",""],
-    ["","","","qol2","qol3","","","","m1","rp1","bh1","","","chal2","chal5","chal3","","",""],
+    ["","","qol4","qol2","qol3","s5","","","m1","rp1","bh1","","","chal2","chal5","chal3","","",""],
     ["","","","","","","","m2","t1","","bh2","","","","chal4","","","",""],
-    ["","","","","","","","","","","","","","","","","","",""],
+    ["","","","","","","","","","","","","","","chal6","","","",""],
     ["","","","","","","","","","","","","","","","","","",""],
     ["","","","","","","","","","","","","","","","","","",""],
     ["","","","","","","","","","","","","","","","","","",""],
@@ -159,6 +159,11 @@ const TREE_UPGS = {
             desc: `Unlock a new star: Omega star. Omega star gain is cube rooted.`,
             cost: E(1e7),
         },
+        s5: {
+            branch: ["s4"],
+            desc: `Remove omega star's cube root.`,
+            cost: E(2.5e7),
+        },
         qol1: {
             req() { return player.supernova.times.gte(2) },
             reqDesc: `2 Supernovas.`,
@@ -178,6 +183,13 @@ const TREE_UPGS = {
             reqDesc: `4 Supernovas.`,
             desc: `Start with Techntium-43 unlocked, improve their element better. You can automatically gain Relativistic particles from mass.`,
             cost: E(10000),
+        },
+        qol4: {
+            branch: ["qol2"],
+            req() { return player.supernova.times.gte(14) },
+            reqDesc: `15 Supernovas.`,
+            desc: `You auto buy stars.`,
+            cost: E(2.5e8),
         },
         chal1: {
             req() { return player.supernova.times.gte(4) },
@@ -214,6 +226,16 @@ const TREE_UPGS = {
             branch: ["chal1"],
             desc: `You can complete C8 50 more times.`,
             cost: E("1e4"),
+        },
+        chal6: {
+            branch: ["chal4"],
+            req() {
+                if(player.chal.comps[9].gte(3)) return player.chal.comps[9]
+                return false
+            },
+            reqDesc(){ return `Complete C9 three times.` },
+            desc: `Every 3 C9 completion unlocks new element (max 4)`,
+            cost: E("1e6"),
         },
         /*
         x: {
