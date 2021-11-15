@@ -4,7 +4,7 @@ const STARS = {
     gain() {
         let x = player.stars.generators[0]
         if (player.md.upgs[8].gte(1)) x = x.mul(tmp.md.upgs[8].eff)
-        return x.softcap(E('1e700'),0.6,0)
+        return x.softcap(E('1e500'),0.6,0)
     },
     effect() {
         let p = E(1)
@@ -91,6 +91,8 @@ function updateStarsScreenHTML() {
 
 function updateStarsHTML() {
     tmp.el.stars_Amt.setTxt(format(player.stars.points,2)+" / "+format(tmp.stars.maxlimit,2)+" "+formatGain(player.stars.points,tmp.stars.gain))
+    if(tmp.stars.gain.gte(E('1e500'))) tmp.el.stars_Softcap.setTxt("(softcapped)")
+    else tmp.el.stars_Softcap.setTxt("")
     tmp.el.stars_Eff.setTxt(format(tmp.stars.effect))
     if(player.supernova.tree.includes("s4")) tmp.el.star_btn.setVisible(player.stars.unls < 6)
     else tmp.el.star_btn.setVisible(player.stars.unls < 5)
