@@ -372,11 +372,11 @@ const ELEMENTS = {
         },
         {
             desc: `Double your neutron star gain.`,
-            cost: E('e9e3')
+            cost: E('e1e4')
         },
         {
             desc: `Your rank, tier, tetr boosts Red, Orange, Yellow star gain.`,
-            cost: E('e1.15e4'),
+            cost: E('e1.16e4'),
             effect() {
                 let x = player.ranks.rank.root(2).mul(player.ranks.tier).mul(player.ranks.tetr)
                 return x
@@ -389,7 +389,7 @@ const ELEMENTS = {
         },
         {
             desc: `Omega star boosts every stars in star tab at very reduced rate, even itself.`,
-            cost: E('e1.35e4'),
+            cost: E('e1.355e4'),
             effect() {
                 let x = player.stars.generators[5].add(E(1)).log10().pow(E(2))
                 return x
